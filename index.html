@@ -35,28 +35,48 @@ main{padding:14px;max-width:900px;margin:auto}
 .tabs{display:flex;gap:4px;background:rgba(255,255,255,.16);padding:4px;border-radius:14px}
 .tabs button{flex:1;border:0;background:none;color:#fff;font:inherit;font-weight:600;padding:9px;border-radius:11px}
 .tabs button.on{background:#fff;color:var(--h1)}
+#v2{--bg:#f6f4ef;--card:#fff;--tx:#1d1d1b;--mut:#7a766d;--ac:#2f6f5e;--bd:#e3dfd5;background:var(--bg);color:var(--tx);padding:16px;border-radius:18px;max-width:640px;margin-inline:auto}
+@media (prefers-color-scheme:dark){#v2{--bg:#171716;--card:#232321;--tx:#f1efe9;--mut:#9a968c;--ac:#6fc3a9;--bd:#37352f}}
+:root[data-theme="dark"] #v2{--bg:#171716;--card:#232321;--tx:#f1efe9;--mut:#9a968c;--ac:#6fc3a9;--bd:#37352f}
+#v2 h1{font-size:24px;margin:8px 0 14px}
+#v2 .add{display:flex;gap:8px;margin-bottom:16px}
 #v2 input,#v2 textarea{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 12px;width:100%}
-#v2 button,#v2 .btn{font:inherit;border:0;border-radius:12px;padding:10px 16px;background:var(--ac);color:#fff;cursor:pointer}
-#v2 .btn{display:inline-block}
+#v2 button{font:inherit;border:0;border-radius:12px;padding:10px 16px;background:var(--ac);color:#fff;cursor:pointer}
+#v2 .btn{display:inline-block;font:inherit;border-radius:12px;padding:10px 16px;cursor:pointer}
 #v2 button.g,#v2 .btn.g{background:transparent;color:var(--ac);border:1px solid var(--ac)}
 #v2 button.d{background:transparent;color:#c0392b;padding:4px 8px}
-.add{display:flex;gap:8px;margin-bottom:14px}
-.sec{background:var(--card);border:1px solid var(--bd);border-radius:14px;margin-bottom:10px;overflow:hidden}
-.hd{display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer;font-size:18px;font-weight:600}
-.hd span.ar{color:var(--mut);transition:transform .2s}.open .hd span.ar{transform:rotate(-90deg)}
-.body{display:none;padding:0 16px 16px}.open .body{display:block}
-#v2 .bigt{font-size:26px;font-weight:700;border:0;border-bottom:2px solid var(--ac);border-radius:0;background:transparent;padding:6px 0;margin-bottom:14px}
-.it{margin-bottom:16px}.it img{width:100%;border-radius:12px;display:block;margin-bottom:6px}
+#v2 .sec{background:var(--card);border:1px solid var(--bd);border-radius:14px;margin-bottom:10px;overflow:hidden}
+#v2 .hd{display:flex;align-items:center;justify-content:space-between;padding:16px;cursor:pointer;font-size:18px;font-weight:600}
+#v2 .hd span.ar{color:var(--mut);transition:transform .2s}
+#v2 .open .hd span.ar{transform:rotate(-90deg)}
+#v2 .body{display:none;padding:0 16px 16px}
+#v2 .open .body{display:block}
+#v2 .bigt{font-size:26px;font-weight:700;border:0;border-radius:0;background:transparent;padding:6px 0;margin-bottom:14px;text-align:center;width:100%}
+#v2 .it{margin-bottom:16px}
+#v2 .it img{width:100%;border-radius:12px;display:block;margin-bottom:6px}
 #v2 textarea{min-height:80px;resize:vertical}
-.srow{display:flex;justify-content:space-between;gap:8px;margin-top:6px}
+#v2 .srow{display:flex;justify-content:space-between;gap:8px;margin-top:6px}
+#v2 .empty{color:var(--mut);text-align:center;padding:30px 0}
+.hero{position:relative}
+#menuBtn{position:absolute;left:12px;top:12px;width:40px;height:40px;border:0;border-radius:12px;background:rgba(255,255,255,.18);color:#fff;font-size:22px;line-height:1}
+#menu{position:absolute;left:12px;top:58px;background:#fff;border-radius:12px;padding:6px;box-shadow:0 6px 22px rgba(0,0,0,.25);z-index:9}
+#menu button{border:0;background:none;color:#10243e;font:inherit;font-weight:600;padding:10px 16px;white-space:nowrap}
+[hidden]{display:none!important}
+#v2 .em{background:var(--card);border:1px dashed var(--ac);color:var(--ac);border-radius:12px;padding:8px 12px;margin-bottom:12px;text-align:center;font-size:14px}
+#v2 div.bigt{display:block}
+#v2 .br{margin-top:8px}
+#v2 .bh{display:flex;align-items:center;gap:8px;padding:12px 14px;background:var(--bg);border:1px solid var(--bd);border-radius:12px;font-weight:600;cursor:pointer}
+#v2 .bh b{flex:1}#v2 .bh input{flex:1;width:auto}
+#v2 .bh .ar{color:var(--mut);transition:transform .2s}#v2 .br.open .bh .ar{transform:rotate(-90deg)}
+#v2 .hd,#v2 .bh{position:relative}#v2 .hd b,#v2 .bh b{flex:1;text-align:center}#v2 .hd .ar,#v2 .bh .ar{position:absolute;inset-inline-end:14px}#v2 .bh{padding-inline:40px}#v2 .bh input{text-align:center}#v2 .hd{padding-inline:40px}#v2 .bb{display:none;padding:12px 0 0}#v2 .br.open .bb{display:block}
 </style>
 </head>
 <body>
-<div class="hero"><h1>⚡ محطات TAZA وأقسامي</h1><p>Service Maintenance FES</p>
+<div class="hero"><button id="menuBtn" hidden aria-label="القائمة">☰</button><div id="menu" hidden><button id="editBtn">✏️ تعديل</button></div><h1>⚡ محطات TAZA وأقسامي</h1><p>Service Maintenance FES</p>
 <div class="tabs"><button id="t1" class="on">🔎 المحطات</button><button id="t2">🖼️ أقسامي</button></div></div>
 <main>
 <div id="v1"><div class="box"><i>🔍</i><input id="q" type="text" inputmode="search" dir="ltr" placeholder="اكتب الحروف الأولى من اسم المحطة…" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false"></div><div id="sug"></div><div id="types"></div><div id="out"></div></div>
-<div id="v2" hidden><div class="add"><input id="nt" placeholder="عنوان قسم جديد..."><button onclick="addSec()">إضافة</button></div><div id="list"></div></div>
+<div id="v2" hidden><h1>أقسامي</h1><div class="add"><input id="nt" placeholder="عنوان قسم جديد..."><button onclick="addSec()">إضافة</button></div><div id="list"></div></div>
 </main>
 <script>
 (()=>{
@@ -95,7 +115,7 @@ suggest();
 </script>
 <script>
 
-let S=[],db=null;
+let S=[],db=null,edit=false;
 const idb=()=>new Promise((res,rej)=>{const r=indexedDB.open("sections-app",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
 async function load(){
   let old=[];try{old=JSON.parse(localStorage.getItem("secs")||"[]")}catch(e){}
@@ -105,6 +125,7 @@ async function load(){
     S=(v&&v.length)?v:old;
     if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
   }catch(e){S=old}
+  S.forEach(s=>{if(!s.branches){s.branches=(s.items&&s.items.length)?[{id:1,name:"عام",items:s.items,open:false}]:[];delete s.items}});
   render();if(S.length)save();
 }
 function save(){
@@ -112,26 +133,34 @@ function save(){
   try{localStorage.setItem("secs",JSON.stringify(S))}catch(e){alert("المساحة ممتلئة، احذف بعض الصور")}
 }
 const esc=s=>(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-function addSec(){const v=nt.value.trim();if(!v)return;S.unshift({id:Date.now(),title:v,heading:v,items:[],open:true});nt.value="";save();render()}
+function addSec(){const v=nt.value.trim();if(!v)return;S.unshift({id:Date.now(),title:v,heading:v,branches:[],open:true});nt.value="";save();render()}
 function tog(i){S[i].open=!S[i].open;save();render()}
 function delSec(i){if(confirm("حذف هذا القسم؟")){S.splice(i,1);save();render()}}
 function setT(i,v){S[i].heading=v;S[i].title=v||S[i].title;save();document.querySelectorAll(".hd b")[i].textContent=S[i].title}
-function setX(i,j,v){S[i].items[j].text=v;save()}
-function delIt(i,j){S[i].items.splice(j,1);save();render()}
-async function addImgs(i,inp){const fs=[...inp.files];for(const f of fs){try{S[i].items.push({img:await shrink(f),text:""})}catch(e){}}inp.value="";save();render()}
+function addBr(i){const el=document.getElementById("nb"+i),v=el.value.trim();if(!v)return;S[i].branches.push({id:Date.now(),name:v,items:[],open:true});save();render()}
+function togBr(i,k){S[i].branches[k].open=!S[i].branches[k].open;save();render()}
+function setBN(i,k,v){S[i].branches[k].name=v;save()}
+function delBr(i,k){if(confirm("حذف هذا الفرع؟")){S[i].branches.splice(k,1);save();render()}}
+function setX(i,k,j,v){S[i].branches[k].items[j].text=v;save()}
+function delIt(i,k,j){S[i].branches[k].items.splice(j,1);save();render()}
+async function addImgs(i,k,inp){const fs=[...inp.files];for(const f of fs){try{S[i].branches[k].items.push({img:await shrink(f),text:""})}catch(e){}}inp.value="";save();render()}
 function shrink(f){return new Promise(r=>{const im=new Image();im.onload=()=>{const m=900,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",.75))};im.src=URL.createObjectURL(f)})}
 function render(){
-  list.innerHTML=S.length?S.map((s,i)=>`<div class="sec ${s.open?"open":""}">
+  const eb=edit?'<div class="em">✏️ وضع التعديل مفعّل</div>':"";
+  list.innerHTML=eb+(S.length?S.map((s,i)=>`<div class="sec ${s.open?"open":""}">
   <div class="hd" onclick="tog(${i})"><b>${esc(s.title)}</b><span class="ar">‹</span></div>
   <div class="body">
-   <input class="bigt" value="${esc(s.heading)}" placeholder="العنوان الكبير" oninput="setT(${i},this.value)">
-   ${s.items.map((t,j)=>`<div class="it"><img src="${t.img}"><textarea placeholder="اكتب ما تشاء هنا..." oninput="setX(${i},${j},this.value)">${esc(t.text)}</textarea><div class="srow"><span></span><button class="d" onclick="delIt(${i},${j})">حذف الصورة</button></div></div>`).join("")}
-   <div class="srow"><label class="btn g" style="position:relative;overflow:hidden">+ إضافة صور<input type="file" accept="image/*" multiple style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:0" onchange="addImgs(${i},this)"></label><button class="d" onclick="delSec(${i})">حذف القسم</button></div>
-  </div></div>`).join(""):'<div class="empty">لا توجد أقسام بعد. أضف عنواناً للبدء.</div>'
+   ${edit?`<input class="bigt" value="${esc(s.heading)}" placeholder="العنوان الكبير" oninput="setT(${i},this.value)">`:`<div class="bigt">${esc(s.heading)}</div>`}
+   ${s.branches.map((b,k)=>`<div class="br ${b.open?"open":""}"><div class="bh" onclick="togBr(${i},${k})">${edit?`<input value="${esc(b.name)}" onclick="event.stopPropagation()" oninput="setBN(${i},${k},this.value)"><button class="d" onclick="event.stopPropagation();delBr(${i},${k})">حذف</button>`:`<b>${esc(b.name)}</b>`}<span class="ar">‹</span></div>
+    <div class="bb">${b.items.map((t,j)=>`<div class="it"><img src="${t.img}"><textarea placeholder="اكتب ما تشاء هنا..." oninput="setX(${i},${k},${j},this.value)">${esc(t.text)}</textarea>${edit?`<div class="srow"><span></span><button class="d" onclick="delIt(${i},${k},${j})">حذف الصورة</button></div>`:""}</div>`).join("")}
+    <div class="srow"><label class="btn g" style="position:relative;overflow:hidden">+ إضافة صور<input type="file" accept="image/*" multiple style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:0" onchange="addImgs(${i},${k},this)"></label></div></div></div>`).join("")||'<div class="empty">لا توجد فروع</div>'}
+   ${edit?`<div class="add" style="margin-top:12px"><input id="nb${i}" placeholder="اسم فرع جديد..."><button onclick="addBr(${i})">+ فرع</button></div><div class="srow"><span></span><button class="d" onclick="delSec(${i})">حذف القسم</button></div>`:""}
+  </div></div>`).join(""):'<div class="empty">لا توجد أقسام بعد. أضف عنواناً للبدء.</div>')
 }
+menuBtn.onclick=()=>{menu.hidden=!menu.hidden};
+editBtn.onclick=()=>{edit=!edit;menu.hidden=true;editBtn.textContent=edit?"✔️ إنهاء التعديل":"✏️ تعديل";render()};
 load();
-
-const tabs=n=>{v1.hidden=n!==1;v2.hidden=n!==2;t1.classList.toggle("on",n===1);t2.classList.toggle("on",n===2)};
+const tabs=n=>{v1.hidden=n!==1;v2.hidden=n!==2;menuBtn.hidden=n!==2;if(n!==2)menu.hidden=true;t1.classList.toggle("on",n===1);t2.classList.toggle("on",n===2)};
 t1.onclick=()=>tabs(1);t2.onclick=()=>tabs(2);
 </script>
 <script>if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{})</script>
