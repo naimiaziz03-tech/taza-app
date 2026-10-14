@@ -69,6 +69,10 @@ main{padding:14px;max-width:900px;margin:auto}
 #v2 .bh b{flex:1}#v2 .bh input{flex:1;width:auto}
 #v2 .bh .ar{color:var(--mut);transition:transform .2s}#v2 .br.open .bh .ar{transform:rotate(-90deg)}
 #v2 .hd,#v2 .bh{position:relative}#v2 .hd b,#v2 .bh b{flex:1;text-align:center}#v2 .hd .ar,#v2 .bh .ar{position:absolute;inset-inline-end:14px}#v2 .bh{padding-inline:40px}#v2 .bh input{text-align:center}#v2 .hd{padding-inline:40px}#v2 .bb{display:none;padding:12px 0 0}#v2 .br.open .bb{display:block}
+#v2 select{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:9px 8px}
+#v2 select.cs{width:100%;margin-top:8px}
+#v2 .bh{flex-wrap:wrap}#v2 .bh select.cs{flex:0 0 100%}
+#v2 .cat{margin:18px 0 2px;text-align:center;font-weight:700;font-size:15px;color:var(--ac)}
 </style>
 </head>
 <body>
@@ -137,7 +141,7 @@ function addSec(){const v=nt.value.trim();if(!v)return;S.unshift({id:Date.now(),
 function tog(i){S[i].open=!S[i].open;save();render()}
 function delSec(i){if(confirm("حذف هذا القسم؟")){S.splice(i,1);save();render()}}
 function setT(i,v){S[i].heading=v;S[i].title=v||S[i].title;save();document.querySelectorAll(".hd b")[i].textContent=S[i].title}
-function addBr(i){const el=document.getElementById("nb"+i),v=el.value.trim();if(!v)return;S[i].branches.push({id:Date.now(),name:v,items:[],open:true});save();render()}
+function addBr(i){const el=document.getElementById("nb"+i),v=el.value.trim(),c=document.getElementById("nc"+i).value;if(!v)return;if(!c){alert("اختر تصنيف الفرع أولاً");return}S[i].branches.push({id:Date.now(),name:v,cat:c,items:[],open:true});save();render()}
 function togBr(i,k){S[i].branches[k].open=!S[i].branches[k].open;save();render()}
 function setBN(i,k,v){S[i].branches[k].name=v;save()}
 function delBr(i,k){if(confirm("حذف هذا الفرع؟")){S[i].branches.splice(k,1);save();render()}}
@@ -145,16 +149,20 @@ function setX(i,k,j,v){S[i].branches[k].items[j].text=v;save()}
 function delIt(i,k,j){S[i].branches[k].items.splice(j,1);save();render()}
 async function addImgs(i,k,inp){const fs=[...inp.files];for(const f of fs){try{S[i].branches[k].items.push({img:await shrink(f),text:""})}catch(e){}}inp.value="";save();render()}
 function shrink(f){return new Promise(r=>{const im=new Image();im.onload=()=>{const m=900,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",.75))};im.src=URL.createObjectURL(f)})}
+const CATS=["Tests","Appareillages","Schemas","Preparation&Comp Rendu"];
+const catOpts=sel=>'<option value="">— اختر التصنيف —</option>'+CATS.map(c=>`<option value="${esc(c)}"${c===sel?" selected":""}>${esc(c)}</option>`).join("");
+function setCat(i,k,v){S[i].branches[k].cat=v;save();render()}
+function brHTML(i,k,b){return `<div class="br ${b.open?"open":""}"><div class="bh" onclick="togBr(${i},${k})">${edit?`<input value="${esc(b.name)}" onclick="event.stopPropagation()" oninput="setBN(${i},${k},this.value)"><button class="d" onclick="event.stopPropagation();delBr(${i},${k})">حذف</button><select class="cs" onclick="event.stopPropagation()" onchange="setCat(${i},${k},this.value)">${catOpts(b.cat||"")}</select>`:`<b>${esc(b.name)}</b>`}<span class="ar">‹</span></div>
+    <div class="bb">${b.items.map((t,j)=>`<div class="it"><img src="${t.img}"><textarea placeholder="اكتب ما تشاء هنا..." oninput="setX(${i},${k},${j},this.value)">${esc(t.text)}</textarea>${edit?`<div class="srow"><span></span><button class="d" onclick="delIt(${i},${k},${j})">حذف الصورة</button></div>`:""}</div>`).join("")}
+    <div class="srow"><label class="btn g" style="position:relative;overflow:hidden">+ إضافة صور<input type="file" accept="image/*" multiple style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:0" onchange="addImgs(${i},${k},this)"></label></div></div></div>`}
 function render(){
   const eb=edit?'<div class="em">✏️ وضع التعديل مفعّل</div>':"";
   list.innerHTML=eb+(S.length?S.map((s,i)=>`<div class="sec ${s.open?"open":""}">
   <div class="hd" onclick="tog(${i})"><b>${esc(s.title)}</b><span class="ar">‹</span></div>
   <div class="body">
    ${edit?`<input class="bigt" value="${esc(s.heading)}" placeholder="العنوان الكبير" oninput="setT(${i},this.value)">`:`<div class="bigt">${esc(s.heading)}</div>`}
-   ${s.branches.map((b,k)=>`<div class="br ${b.open?"open":""}"><div class="bh" onclick="togBr(${i},${k})">${edit?`<input value="${esc(b.name)}" onclick="event.stopPropagation()" oninput="setBN(${i},${k},this.value)"><button class="d" onclick="event.stopPropagation();delBr(${i},${k})">حذف</button>`:`<b>${esc(b.name)}</b>`}<span class="ar">‹</span></div>
-    <div class="bb">${b.items.map((t,j)=>`<div class="it"><img src="${t.img}"><textarea placeholder="اكتب ما تشاء هنا..." oninput="setX(${i},${k},${j},this.value)">${esc(t.text)}</textarea>${edit?`<div class="srow"><span></span><button class="d" onclick="delIt(${i},${k},${j})">حذف الصورة</button></div>`:""}</div>`).join("")}
-    <div class="srow"><label class="btn g" style="position:relative;overflow:hidden">+ إضافة صور<input type="file" accept="image/*" multiple style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:0" onchange="addImgs(${i},${k},this)"></label></div></div></div>`).join("")||'<div class="empty">لا توجد فروع</div>'}
-   ${edit?`<div class="add" style="margin-top:12px"><input id="nb${i}" placeholder="اسم فرع جديد..."><button onclick="addBr(${i})">+ فرع</button></div><div class="srow"><span></span><button class="d" onclick="delSec(${i})">حذف القسم</button></div>`:""}
+   ${[...CATS,""].map(c=>{const bs=s.branches.map((b,k)=>[b,k]).filter(([b])=>(b.cat||"")===c);return bs.length?`<div class="cat">${c?esc(c):"بدون تصنيف"}</div>`+bs.map(([b,k])=>brHTML(i,k,b)).join(""):""}).join("")||'<div class="empty">لا توجد فروع</div>'}
+   ${edit?`<div class="add" style="margin-top:12px"><input id="nb${i}" placeholder="اسم فرع جديد..."><button onclick="addBr(${i})">+ فرع</button></div><select class="cs" id="nc${i}">${catOpts("")}</select><div class="srow"><span></span><button class="d" onclick="delSec(${i})">حذف القسم</button></div>`:""}
   </div></div>`).join(""):'<div class="empty">لا توجد أقسام بعد. أضف عنواناً للبدء.</div>')
 }
 menuBtn.onclick=()=>{menu.hidden=!menu.hidden};
